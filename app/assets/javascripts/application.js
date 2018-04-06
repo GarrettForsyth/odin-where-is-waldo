@@ -10,6 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//
+//= require paloma
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+document.addEventListener('DOMContentLoaded', function() {
+  Paloma.start();
+});
