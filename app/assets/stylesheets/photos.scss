@@ -2,32 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 //
-.main-container {
-  display: flex;
-
-  width: 80%;
-  height: 100px;
-  margin-left: auto;
-  margin-right: auto;
-
-  background: #1a1a5a;
+.puzzle-container {
+  position: relative;
 }
 
 .puzzle {
-  flex: 10;
-  width: 90%;
-  height: 400px;
-  background: #CA2CA2;
-}
-
-.characters {
-  flex: 1;
-  width: 10%;
-  height: 400px;
-  background: #22FF22;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
 }
 
 .target {
+  z-index: 10;
   position: absolute;
   width: 10px;
   height: 10px;
@@ -36,7 +23,7 @@
   border-radius: 50%;
 
   animation-name: expand-target;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-timing-function: ease-in-out;
   animation-delay: 0;
   animation-iteration-count: 1;

@@ -2,7 +2,7 @@ var PhotosController = Paloma.controller('Photos');
 
 PhotosController.prototype.show = function() {
   
-  let puzzle = document.querySelector('.puzzle');
+  let puzzleContainer = document.querySelector('.puzzle-container');
 
   function handleGuess(e){
     removeLastClick();
@@ -11,8 +11,9 @@ PhotosController.prototype.show = function() {
   }
 
   function removeLastClick(){
-    while(puzzle.firstChild) {
-      puzzle.removeChild(puzzle.firstChild);
+    let cn = puzzleContainer.childNodes;
+    for (let i = cn.length; i > 2; i= i -1) {
+      puzzleContainer.removeChild(puzzleContainer.lastChild);
     }
   }
 
@@ -22,7 +23,7 @@ PhotosController.prototype.show = function() {
     target.classList.add('target');
     target.style.left = `${(e.pageX - TARGET_RADIUS )}px`;
     target.style.top = `${(e.pageY - TARGET_RADIUS)}px`;
-    puzzle.append(target);
+    puzzleContainer.append(target);
   }
 
   function createGuessMenu(e){
@@ -46,9 +47,9 @@ PhotosController.prototype.show = function() {
     const TARGET_RADIUS = 50;
     title.style.left = `${(e.pageX + TARGET_RADIUS )}px`;
     title.style.top = `${(e.pageY - TARGET_RADIUS)}px`;
-    puzzle.append(title);
+    puzzleContainer.append(title);
 
   }
 
-  puzzle.addEventListener('click', handleGuess);
+  puzzleContainer.addEventListener('click', handleGuess);
 };
