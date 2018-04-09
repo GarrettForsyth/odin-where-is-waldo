@@ -1,4 +1,10 @@
 <%= provide(:title, "Puzzle #{@photo.id}") %>
+<span class="help">?</span>
+
+<ul class="character-list">
+    <%= render @photo.characters %>
+</ul>
+
 <div class="puzzle-container">
   <% if @photo.image.file.exists? %>
     <%= image_tag @photo.image, class: 'puzzle' %>

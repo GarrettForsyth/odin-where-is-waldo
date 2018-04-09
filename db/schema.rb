@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409132921) do
+ActiveRecord::Schema.define(version: 20180409162302) do
+
+  create_table "characters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "image"
+  end
+
+  create_table "characters_photos", id: false, force: :cascade do |t|
+    t.integer "photo_id", null: false
+    t.integer "character_id", null: false
+  end
 
   create_table "photos", force: :cascade do |t|
     t.datetime "created_at", null: false

@@ -3,6 +3,9 @@ var PhotosController = Paloma.controller('Photos');
 PhotosController.prototype.show = function() {
   
   let puzzleContainer = document.querySelector('.puzzle-container');
+  let helpButton = document.querySelector('.help');
+  <% @photo = Photo.find(1) %>
+  <% @characters = @photo.characters %>
 
   function handleGuess(e){
     removeLastClick();
@@ -32,15 +35,12 @@ PhotosController.prototype.show = function() {
     title.innerHTML = 'Who did you find?';
 
     let menu = document.createElement('ul');
-    let waldo = document.createElement('li');
-    waldo.innerHTML = 'Waldo';
-    menu.append(waldo);
-    let friend1 = document.createElement('li');
-    friend1.innerHTML = 'friend1';
-    menu.append(friend1);
-    let friend2 = document.createElement('li');
-    friend2.innerHTML = 'friend2';
-    menu.append(friend2);
+    let character;
+    <% @characters.each do |character| %>
+      character = document.createElement('li');
+      character.innerHTML = "<%= character.name %>";
+      menu.append(character);
+    <% end %>
 
     title.append(menu);
 
@@ -51,5 +51,17 @@ PhotosController.prototype.show = function() {
 
   }
 
+  let characterList = document.querySelector('.character-list');
+  function showCharacters(){
+    characterList.style.display = "block";
+  }
+
+  function hideCharacters(){
+    characterList.style.display = "none";
+  }
+
   puzzleContainer.addEventListener('click', handleGuess);
+  helpButton.addEventListener('mouseenter', showCharacters);
+  helpButton.addEventListener('mouseleave', hideCharacters);
+
 };

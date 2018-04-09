@@ -6,6 +6,38 @@
   position: relative;
 }
 
+.help {
+  position: fixed;
+  opacity: 0.5;
+  top: 10px;
+  left: 10px;
+  font-size: 4rem;
+  background: #ddd;
+  border: 3px solid black;
+  border-radius: 50%;
+}
+
+.character-list {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 50px;
+  list-style: none;
+
+  background: #ddd;
+  border: 3px solid black;
+  
+  .character {
+    display: inline;
+    float: left;
+
+    img {
+      height: 150px;
+      width: auto;
+    }
+  }
+}
+
 .puzzle {
   position: absolute;
   left: 0;
@@ -72,8 +104,6 @@ ul {
 
   li {
     width: 150px;
-    height: 30px;
-    line-height: 30px;
     position: relative;
     text-transform: uppercase;
     font-size: 1rem;
