@@ -4,8 +4,6 @@ PhotosController.prototype.show = function() {
   
   let puzzleContainer = document.querySelector('.puzzle-container');
   let helpButton = document.querySelector('.help');
-  <% @photo = Photo.find(1) %>
-  <% @characters = @photo.characters %>
 
   function handleGuess(e){
     removeLastClick();
@@ -34,14 +32,8 @@ PhotosController.prototype.show = function() {
     title.classList.add('list-title');
     title.innerHTML = 'Who did you find?';
 
-    let menu = document.createElement('ul');
-    let character;
-    <% @characters.each do |character| %>
-      character = document.createElement('li');
-      character.innerHTML = "<%= character.name %>";
-      menu.append(character);
-    <% end %>
-
+    let menu = document.querySelector('.character-menu').cloneNode(true);
+    menu.style.display = "block";
     title.append(menu);
 
     const TARGET_RADIUS = 50;

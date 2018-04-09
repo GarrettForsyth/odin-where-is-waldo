@@ -11,3 +11,9 @@
   <% end %>
 </div>
 
+<ul class='character-menu'>
+  <% @photo.characters.each do |character| %>
+    <li> <%= character.name %></li>
+  <% end %>
+</ul>
+
