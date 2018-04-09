@@ -19,16 +19,15 @@ ActiveRecord::Schema.define(version: 20180409162302) do
     t.string "image"
   end
 
-  create_table "photos", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "image"
-  end
-
   create_table "characters_photos", id: false, force: :cascade do |t|
     t.integer "photo_id", null: false
     t.integer "character_id", null: false
   end
 
+  create_table "photos", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
+  end
 
 end
