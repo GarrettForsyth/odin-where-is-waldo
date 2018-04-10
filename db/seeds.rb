@@ -7,12 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #
 Character.create(name: 'Waldo', image: Rails.root.join("app/assets/images/waldo.jpg").open)
-Character.create(name: 'Woof', image: Rails.root.join("app/assets/images/woof.jpg").open)
-Character.create(name: 'Wenda', image: Rails.root.join("app/assets/images/wenda.jpg").open)
 Character.create(name: 'Wizard Whitebeard', image: Rails.root.join("app/assets/images/wizard.jpg").open)
-Character.create(name: 'Odlaw', image: Rails.root.join("app/assets/images/odlaw.jpg").open)
+Character.create(name: 'Woof', image: Rails.root.join("app/assets/images/woof.jpg").open)
+Character.create(name: 'Wilma', image: Rails.root.join("app/assets/images/wilma.jpg").open)
+Character.create(name: 'Wenda', image: Rails.root.join("app/assets/images/wenda.jpg").open)
+Character.create(name: 'Oswald', image: Rails.root.join("app/assets/images/oswald.jpg").open)
 
-Photo.create(image: Rails.root.join("app/assets/images/waldo_boats.jpg").open)
+Photo.create(image: Rails.root.join("app/assets/images/waldo_boats.jpg"))
 boats = Photo.find(1);
 boats.characters << Character.find_by(name: "Waldo");
 boats.characters << Character.find_by(name: "Wenda");
