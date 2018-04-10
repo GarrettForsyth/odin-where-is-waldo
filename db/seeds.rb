@@ -13,7 +13,7 @@ Character.create(name: 'Wilma', image: Rails.root.join("app/assets/images/wilma.
 Character.create(name: 'Wenda', image: Rails.root.join("app/assets/images/wenda.jpg").open)
 Character.create(name: 'Odlaw', image: Rails.root.join("app/assets/images/odlaw.jpg").open)
 
-Photo.create(image: Rails.root.join("app/assets/images/waldo_boats.jpg"))
+Photo.create(image: Rails.root.join("app/assets/images/waldo_boats.jpg").open)
 boats = Photo.find(1);
 boats.characters << Character.find_by(name: "Waldo");
 boats.characters << Character.find_by(name: "Wenda");
