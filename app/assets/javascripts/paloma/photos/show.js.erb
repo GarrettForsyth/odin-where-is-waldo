@@ -1,13 +1,21 @@
 var PhotosController = Paloma.controller('Photos');
 
 PhotosController.prototype.show = function() {
+
+  const photo_id = this.params.photo_id;
   
   let puzzleContainer = document.querySelector('.puzzle-container');
+  /* container overtop puzzle containter containing found characters target
+     cricles. Seperate so it doesn't get cleared between guesses */
+  let foundContainer = document.querySelector('.found-container');
   let helpButton = document.querySelector('.help');
+
+  let lastGuessCoord;
 
   function handleGuess(e){
     removeLastClick();
-    createTarget(e);
+    lastGuessCoord = { "x": e.pageX, "y": e.pageY };
+    createGuessTarget(e);
     createGuessMenu(e);
   }
 
@@ -18,13 +26,24 @@ PhotosController.prototype.show = function() {
     }
   }
 
-  function createTarget(e){
-    let target = document.createElement('div');
-    const TARGET_RADIUS = 10;
-    target.classList.add('target');
-    target.style.left = `${(e.pageX - TARGET_RADIUS )}px`;
-    target.style.top = `${(e.pageY - TARGET_RADIUS)}px`;
+  function createGuessTarget(e){
+    let target = createTarget(e.pageX, e.pageY, 10)
     puzzleContainer.append(target);
+  }
+
+  function createFoundTarget(){
+    let target = createTarget(lastGuessCoord.x, lastGuessCoord.y, 10)
+    target.style.borderColor = 'black';
+    foundContainer.append(target); 
+  }
+
+  function createTarget(x,  y, r){
+    let target = document.createElement('div');
+    const TARGET_RADIUS = r;
+    target.classList.add('target');
+    target.style.left = `${(x - TARGET_RADIUS )}px`;
+    target.style.top = `${(y - TARGET_RADIUS)}px`;
+    return target;
   }
 
   function createGuessMenu(e){
@@ -34,6 +53,11 @@ PhotosController.prototype.show = function() {
 
     let menu = document.querySelector('.character-menu').cloneNode(true);
     menu.style.display = "block";
+
+    menu.childNodes.forEach( character => {
+      character.addEventListener('click', checkGuess)
+    });
+
     title.append(menu);
 
     const TARGET_RADIUS = 50;
@@ -43,12 +67,66 @@ PhotosController.prototype.show = function() {
 
   }
 
+  function checkGuess(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    removeLastClick();
+    console.log(lastGuessCoord)
+    console.log(window.location.href)
+
+    console.log(e.target);
+    console.log(e.target.innerHTML);
+
+    let guess = e.target.innerHTML
+    fetch('/guess', {
+      method: 'post',
+      dataType: 'json',
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': Rails.csrfToken(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ guessName: guess, id: photo_id, guessCoord: lastGuessCoord }),
+      credentials: 'same-origin'
+    }).then(result => result.json())
+    .then(result => handleResponse(result.response))
+  }
+
+  let feedbackBox = document.querySelector('.feedback-container');
+  let feedback = document.querySelector('.feedback');
+  feedbackBox.addEventListener('animationend', revertFeedback);
+
+  function revertFeedback(){
+    feedbackBox.classList.toggle('on');
+    feedbackBox.style.display = 'none'
+  }
+
+  function handleResponse(result) {
+    feedbackBox.style.display = 'flex';
+    feedbackBox.classList.toggle('on');
+
+    if (result) handleCorrectGuess()
+    else        handleIncorrectGuess()
+  }
+
+  function handleCorrectGuess(){
+    feedback.innerHTML = "Nailed it!"
+    createFoundTarget();
+  }
+
+  function handleIncorrectGuess(){
+    console.log(feedbackBox.firstChild)
+    feedback.innerHTML = "No dice!"
+  }
+
   let characterList = document.querySelector('.character-list');
   function showCharacters(){
+    characterList.classList.toggle('on');
     characterList.style.display = "block";
   }
 
   function hideCharacters(){
+    characterList.classList.toggle('on');
     characterList.style.display = "none";
   }
 
