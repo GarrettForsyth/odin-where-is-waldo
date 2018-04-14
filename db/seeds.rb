@@ -16,7 +16,7 @@ Character.create(name: 'Odlaw', image: Rails.root.join("app/assets/images/odlaw.
 Photo.create(image: Rails.root.join("app/assets/images/waldo_boats.jpg").open)
 Photo.create(image: Rails.root.join("app/assets/images/waldo_flags.jpg").open)
 Photo.create(image: Rails.root.join("app/assets/images/waldo_castle.jpg").open)
-Photo.create(image: Rails.root.join("app/assets/images/waldo_goblins.jpg").open)
+Photo.create(image: Rails.root.join("app/assets/images/waldo_goblin.jpg").open)
 
 boats = Photo.find(1);
 flags = Photo.find(2);
