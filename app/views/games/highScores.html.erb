@@ -1,0 +1,5 @@
+<div class="container">
+  <%= button_to "Play Again!", root_path, method: "get", class: "home-btn"%>
+  <h1 id="high-score-title">Top Scores:</h1>
+  <%= render @top_scores %>
+</div>

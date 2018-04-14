@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410224447) do
+ActiveRecord::Schema.define(version: 20180413161749) do
 
   create_table "characters", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -19,9 +19,23 @@ ActiveRecord::Schema.define(version: 20180410224447) do
     t.string "image"
   end
 
+  create_table "characters_games", id: false, force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.integer "character_id", null: false
+  end
+
   create_table "characters_photos", id: false, force: :cascade do |t|
     t.integer "photo_id", null: false
     t.integer "character_id", null: false
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.decimal "score"
+    t.string "user"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "photo_id"
+    t.index ["photo_id"], name: "index_games_on_photo_id"
   end
 
   create_table "locations", force: :cascade do |t|

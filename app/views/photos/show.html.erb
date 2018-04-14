@@ -9,6 +9,14 @@
     <%= render @photo.characters %>
 </ul>
 
+<%= form_for @game, url: photo_games_url(@photo.id), html: { class: 'name-form' } do |f| %>
+  <div class="title">You did it!</div>
+  <%= f.label(:user, 'Enter your name: ') %>
+  <%= f.text_field :user %><br/>
+  <%= f.hidden_field :game_id, value: @game.id  %>
+  <%= f.submit 'Submit Score' %>
+<% end %>
+
 <div class="puzzle-container">
   <div class="found-container">
     <% if @photo.image.file.exists? %>

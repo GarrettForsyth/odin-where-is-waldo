@@ -1,0 +1,23 @@
+var GamesController = Paloma.controller('Games');
+
+GamesController.prototype.highScores = function() {
+  const photo_url = this.params.photo_url.url;
+  console.log(photo_url);
+
+  /* Ugly, but need to do this because pseudo elements are not part of DOM and 
+     cannot be selected in javascript (!?! as far as i know) 
+     and the image of the pseudo element is updated dynamically depending on
+     the puzzle chosen
+  */
+  let container = document.querySelector('.container');
+  document.styleSheets[0].addRule('.container:before',
+                                  `background: url('${photo_url}');
+                                   background-repeat: repeat;
+                                   background-size: cover;
+                                   -webkit-filter: blur(5px);
+                                   -moz-filter: blur(5px);
+                                   -o-filter: blur(5px);
+                                   -ms-filter: blur(5px);
+                                   filter: blur(5px);`)
+
+};

@@ -1,3 +1,8 @@
 <%= provide(:title, 'Where is Waldo?') %>
-<h1>Where is Waldo?</h1>
-<p>Pick your puzzle:</p>
+<div class="container">
+  <h1 class="main-title">Where is Waldo?</h1>
+  <p class="sub-title">Pick your puzzle:</p>
+
+  <%= render @photos %>
+
+</div>

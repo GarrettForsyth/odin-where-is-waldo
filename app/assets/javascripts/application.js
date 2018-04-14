@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require_tree .
 
-document.addEventListener('DOMContentLoaded', function() {
+//document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("turbolinks:load", function() {
   Paloma.start();
 });

@@ -3,6 +3,8 @@ var PhotosController = Paloma.controller('Photos');
 PhotosController.prototype.show = function() {
 
   const photo_id = this.params.photo_id;
+  const game_id = this.params.game_id;
+  let gameOver = false;
   
   let puzzleContainer = document.querySelector('.puzzle-container');
   /* container overtop puzzle containter containing found characters target
@@ -13,8 +15,11 @@ PhotosController.prototype.show = function() {
   let lastGuessCoord;
 
   function handleGuess(e){
+    console.log(gameOver);
+    if (gameOver) return;
     removeLastClick();
     lastGuessCoord = { "x": e.pageX, "y": e.pageY };
+    console.log(lastGuessCoord);
     createGuessTarget(e);
     createGuessMenu(e);
   }
@@ -71,14 +76,9 @@ PhotosController.prototype.show = function() {
     e.preventDefault();
     e.stopPropagation();
     removeLastClick();
-    console.log(lastGuessCoord)
-    console.log(window.location.href)
-
-    console.log(e.target);
-    console.log(e.target.innerHTML);
 
     let guess = e.target.innerHTML
-    fetch('/guess', {
+    fetch('photos/guess', {
       method: 'post',
       dataType: 'json',
       headers: {
@@ -86,7 +86,10 @@ PhotosController.prototype.show = function() {
         'X-CSRF-TOKEN': Rails.csrfToken(),
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ guessName: guess, id: photo_id, guessCoord: lastGuessCoord }),
+      body: JSON.stringify({ guessName: guess,
+                           id: photo_id,
+                           guessCoord: lastGuessCoord,
+                           game_id: game_id}),
       credentials: 'same-origin'
     }).then(result => result.json())
     .then(result => handleResponse(result.response))
@@ -101,21 +104,30 @@ PhotosController.prototype.show = function() {
     feedbackBox.style.display = 'none'
   }
 
-  function handleResponse(result) {
+  function handleResponse(response) {
     feedbackBox.style.display = 'flex';
     feedbackBox.classList.toggle('on');
+    console.log(response)
 
-    if (result) handleCorrectGuess()
+    let result = response.found
+    let over = response.over
+
+    if (result) handleCorrectGuess(over)
     else        handleIncorrectGuess()
   }
 
-  function handleCorrectGuess(){
+  let form = document.querySelector('.name-form');
+  function handleCorrectGuess(over){
     feedback.innerHTML = "Nailed it!"
     createFoundTarget();
+    if (over) {
+      form.style.display='flex';
+      form.classList.toggle('on');
+      gameOver = true;
+    }
   }
 
   function handleIncorrectGuess(){
-    console.log(feedbackBox.firstChild)
     feedback.innerHTML = "No dice!"
   }
 
