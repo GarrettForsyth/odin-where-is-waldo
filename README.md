@@ -1,4 +1,4 @@
-# Where is Waldo?
+# [Where is Waldo?](https://odin-where-is-waldo.herokuapp.com/)
 
 Find Waldo and his friends!
 
